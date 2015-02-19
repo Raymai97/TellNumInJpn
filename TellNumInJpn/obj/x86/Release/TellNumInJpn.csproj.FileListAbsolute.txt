@@ -1,0 +1,8 @@
+C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\bin\Release\TellNumInJpn.exe
+C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\bin\Release\TellNumInJpn.pdb
+C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\obj\x86\Release\TellNumInJpn.Form1.resources
+C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\obj\x86\Release\TellNumInJpn.Properties.Resources.resources
+C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\obj\x86\Release\TellNumInJpn.csproj.GenerateResource.Cache
+C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\obj\x86\Release\TellNumInJpn.exe
+C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\obj\x86\Release\TellNumInJpn.pdb
+C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\obj\x86\Release\TellNumInJpn.csprojResolveAssemblyReference.cache
