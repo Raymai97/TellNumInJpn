@@ -1,7 +1,7 @@
 # Tell number in Japanese
 Program that converts number to Japanese in form of Kanji, Hiragana and Romaji.
 
-Latest version: TellNumInJpn v1.10
+Latest version: TellNumInJpn v1.2
 
 First written by Raymai97 on 19 Feb 2015 (CNY2015)
 
