@@ -1,6 +1,9 @@
-﻿// TellNumInJpn v1.00
+﻿// TellNumInJpn v1.10
 // Written by Raymai97 on 19 Feb 2015 (CNY2015)
 // Email: cheeboonray@gmail.com
+
+// Added "Space Separation" option
+// Fixed bugs such as Kanji "点" appeared in Hiragana, didn't show ltsu (っ) romaji
 
 // toKanji and toHiragana split the number into parts (that are <= 9999) and pass them to _toXXX
 // _toKanji and _toHiragana process number <= 9999, and pass a digit at a time to __toXXX
@@ -41,6 +44,7 @@ namespace TellNumInJpn
         string msgNumOnly = "Please enter number only!";
         string msgMindBlown = "MINDBLOWN! Please try a smaller value / lesser decimal places.";
         string msgNoNeg = "Negative value is not supported!";
+        bool SpaceHiraRomaji = true;
         List<JpnChar> JpnChars = new List<JpnChar>();
 
         string RomajiOfHira(string hiragana)
@@ -48,7 +52,7 @@ namespace TellNumInJpn
             string romaji = "";
             foreach (JpnChar c in JpnChars)
             {
-                if (c.hiragana == hiragana) romaji = c.romaji;
+                if (c.hiragana == hiragana) { romaji = c.romaji; break; }
             }
             return romaji;
         }
@@ -62,7 +66,6 @@ namespace TellNumInJpn
             {
                 hira = hiragana.Substring(i, 1);
                 romaji = RomajiOfHira(hira);
-                if (ltsu) { romaji = romaji[0] + romaji; ltsu = false; }
                 if (i + 1 <= hiragana.Length - 1)
                 {
                     char next = hiragana[i+1];
@@ -158,8 +161,12 @@ namespace TellNumInJpn
                             break;
                         case "っ":
                             ltsu = true;
+                            continue;
+                        case " ":
+                            romaji = " "; 
                             break;
                     }
+                    if (ltsu) { romaji = romaji[0] + romaji; ltsu = false; }
                 }
                 Romaji += romaji ;
             }
@@ -317,85 +324,87 @@ namespace TellNumInJpn
 
         string __toHiragana(string s, int digit)
         {
+            string hira = "?";
             switch (digit)
             {
                 case 3:
                     switch (s)
                     {
-                        case "9": return "きゅうせん";
-                        case "8": return "はっせん";
-                        case "7": return "ななせん";
-                        case "6": return "ろくせん";
-                        case "5": return "ごせん";
-                        case "4": return "よんせん";
-                        case "3": return "さんぜん";
-                        case "2": return "にせん";
-                        case "1": return "せん";
-                        case "0": return "";
+                        case "9": hira = "きゅうせん"; break;
+                        case "8": hira = "はっせん"; break;
+                        case "7": hira = "ななせん"; break;
+                        case "6": hira = "ろくせん"; break;
+                        case "5": hira = "ごせん"; break;
+                        case "4": hira = "よんせん"; break;
+                        case "3": hira = "さんぜん"; break;
+                        case "2": hira = "にせん"; break;
+                        case "1": hira = "せん"; break;
+                        case "0": hira = ""; break;
                     }
                     break;
                 case 2:
                     switch (s)
                     {
-                        case "9": return "きゅうひゃく";
-                        case "8": return "はっぴゃく";
-                        case "7": return "ななひゃく";
-                        case "6": return "ろっぴゃく";
-                        case "5": return "ごひゃく";
-                        case "4": return "よんひゃく";
-                        case "3": return "さんびゃく";
-                        case "2": return "にひゃく";
-                        case "1": return "ひゃく";
-                        case "0": return "";
+                        case "9": hira = "きゅうひゃく"; break;
+                        case "8": hira = "はっぴゃく"; break;
+                        case "7": hira = "ななひゃく"; break;
+                        case "6": hira = "ろっぴゃく"; break;
+                        case "5": hira = "ごひゃく"; break;
+                        case "4": hira = "よんひゃく"; break;
+                        case "3": hira = "さんびゃく"; break;
+                        case "2": hira = "にひゃく"; break;
+                        case "1": hira = "ひゃく"; break;
+                        case "0": hira = ""; break;
                     }
                     break;
                 case 1:
                     switch (s)
                     {
-                        case "9": return "きゅうじゅう";
-                        case "8": return "はちじゅう";
-                        case "7": return "ななじゅう";
-                        case "6": return "ろくじゅう";
-                        case "5": return "ごじゅう";
-                        case "4": return "よんじゅう";
-                        case "3": return "さんじゅう";
-                        case "2": return "にじゅう";
-                        case "1": return "じゅう";
-                        case "0": return "";
+                        case "9": hira = "きゅうじゅう"; break;
+                        case "8": hira = "はちじゅう"; break;
+                        case "7": hira = "ななじゅう"; break;
+                        case "6": hira = "ろくじゅう"; break;
+                        case "5": hira = "ごじゅう"; break;
+                        case "4": hira = "よんじゅう"; break;
+                        case "3": hira = "さんじゅう"; break;
+                        case "2": hira = "にじゅう"; break;
+                        case "1": hira = "じゅう"; break;
+                        case "0": hira = ""; break;
                     }
                     break;
                 case 0:
                     switch (s)
                     {
-                        case "9": return "きゅう";
-                        case "8": return "はち";
-                        case "7": return "なな";
-                        case "6": return "ろく";
-                        case "5": return "ご";
-                        case "4": return "よん";
-                        case "3": return "さん";
-                        case "2": return "に";
-                        case "1": return "いち";
-                        case "0": return "";
+                        case "9": hira = "きゅう"; break;
+                        case "8": hira = "はち"; break;
+                        case "7": hira = "なな"; break;
+                        case "6": hira = "ろく"; break;
+                        case "5": hira = "ご"; break;
+                        case "4": hira = "よん"; break;
+                        case "3": hira = "さん"; break;
+                        case "2": hira = "に"; break;
+                        case "1": hira = "いち"; break;
+                        case "0": hira = ""; break;
                     }
                     break;
                 case -1:
                     switch (s)
                     {
-                        case "9": return "きゅう";
-                        case "8": return "はち";
-                        case "7": return "なな";
-                        case "6": return "ろく";
-                        case "5": return "ご";
-                        case "4": return "よん";
-                        case "3": return "さん";
-                        case "2": return "に";
-                        case "1": return "いち";
-                        case "0": return "れい";
+                        case "9": hira = "きゅう"; break;
+                        case "8": hira = "はち"; break;
+                        case "7": hira = "なな"; break;
+                        case "6": hira = "ろく"; break;
+                        case "5": hira = "ご"; break;
+                        case "4": hira = "よん"; break;
+                        case "3": hira = "さん"; break;
+                        case "2": hira = "に"; break;
+                        case "1": hira = "いち"; break;
+                        case "0": hira = "れい"; break;
                     }
                     break;
             }
-            return "?";
+            if ((hira != "") & SpaceHiraRomaji) { hira += " "; }
+            return hira;
         }
 
         string _toHiragana(decimal num)
@@ -419,7 +428,8 @@ namespace TellNumInJpn
             }
             if (b.Length > 0)
             {
-                Hiragana += "点";
+                Hiragana += "てん";
+                if (SpaceHiraRomaji) { Hiragana += " "; }
                 for (digit = b.Length - 1; digit >= 0; digit--)
                 {
                     Hiragana = Hiragana + __toHiragana(b.Substring(b.Length - 1 - digit, 1), -1);
@@ -453,6 +463,7 @@ namespace TellNumInJpn
                         case 3: Hiragana += "おく"; break;
                         case 4: Hiragana += "ちょう"; break;
                     }
+                    if (SpaceHiraRomaji) { Hiragana += " "; }
                     debt -= 1;
                 }
                 else
@@ -461,13 +472,14 @@ namespace TellNumInJpn
                     debt -= 1;
                 }
             }
+            // Lazy way to trim excessive space.
+            Hiragana = Hiragana.Trim(); 
             return Hiragana;
         }
 
-        private void txtInput_TextChanged(object sender, EventArgs e)
+        void DoJob()
         {
             string s = txtInput.Text;
-            int len;
             decimal num;
             if (s == "")
             {
@@ -486,7 +498,6 @@ namespace TellNumInJpn
                 txtHiragana.Text = msgMindBlown; txtKanji.Text = msgMindBlown; txtRomaji.Text = msgMindBlown; return;
             }
             s = num.ToString();
-            len = s.Length;
             string Romaji = "", Kanji = "", Hiragana = "";
             Kanji = toKanji(num);
             Hiragana = toHiragana(num);
@@ -496,9 +507,20 @@ namespace TellNumInJpn
             txtKanji.Text = Kanji;
         }
 
+        private void txtInput_TextChanged(object sender, EventArgs e)
+        {
+            DoJob();
+        }
+
         private void lblGreeting_Click(object sender, EventArgs e)
         {
             MessageBox.Show(Properties.Resources.somewords,"You found it, cool!",MessageBoxButtons.OK,MessageBoxIcon.Information);
+        }
+
+        private void chkSpaceHiraRomaji_CheckedChanged(object sender, EventArgs e)
+        {
+            SpaceHiraRomaji = chkSpaceHiraRomaji.Checked;
+            DoJob();
         }
 
     }

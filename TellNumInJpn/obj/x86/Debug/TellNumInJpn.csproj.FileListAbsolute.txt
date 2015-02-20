@@ -1,8 +1,0 @@
-C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\obj\x86\Debug\TellNumInJpn.Form1.resources
-C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\obj\x86\Debug\TellNumInJpn.Properties.Resources.resources
-C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\obj\x86\Debug\TellNumInJpn.csproj.GenerateResource.Cache
-C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\bin\Debug\TellNumInJpn.exe
-C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\bin\Debug\TellNumInJpn.pdb
-C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\obj\x86\Debug\TellNumInJpn.exe
-C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\obj\x86\Debug\TellNumInJpn.pdb
-C:\Users\Raymai\Desktop\TellNumInJpn\TellNumInJpn\obj\x86\Debug\TellNumInJpn.csprojResolveAssemblyReference.cache

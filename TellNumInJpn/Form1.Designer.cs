@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkSpaceHiraRomaji = new System.Windows.Forms.CheckBox();
             this.lblGreeting = new System.Windows.Forms.Label();
             this.lblRomaji = new System.Windows.Forms.Label();
             this.lblHiragana = new System.Windows.Forms.Label();
@@ -42,6 +43,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.chkSpaceHiraRomaji);
             this.panel1.Controls.Add(this.lblGreeting);
             this.panel1.Controls.Add(this.lblRomaji);
             this.panel1.Controls.Add(this.lblHiragana);
@@ -54,16 +56,29 @@
             this.panel1.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(594, 291);
+            this.panel1.Size = new System.Drawing.Size(594, 311);
             this.panel1.TabIndex = 0;
+            // 
+            // chkSpaceHiraRomaji
+            // 
+            this.chkSpaceHiraRomaji.AutoSize = true;
+            this.chkSpaceHiraRomaji.Checked = true;
+            this.chkSpaceHiraRomaji.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSpaceHiraRomaji.Location = new System.Drawing.Point(36, 225);
+            this.chkSpaceHiraRomaji.Name = "chkSpaceHiraRomaji";
+            this.chkSpaceHiraRomaji.Size = new System.Drawing.Size(331, 23);
+            this.chkSpaceHiraRomaji.TabIndex = 4;
+            this.chkSpaceHiraRomaji.Text = "Separate hiragana and romaji with space";
+            this.chkSpaceHiraRomaji.UseVisualStyleBackColor = true;
+            this.chkSpaceHiraRomaji.CheckedChanged += new System.EventHandler(this.chkSpaceHiraRomaji_CheckedChanged);
             // 
             // lblGreeting
             // 
             this.lblGreeting.AutoSize = true;
-            this.lblGreeting.Location = new System.Drawing.Point(136, 244);
+            this.lblGreeting.Location = new System.Drawing.Point(136, 264);
             this.lblGreeting.Name = "lblGreeting";
             this.lblGreeting.Size = new System.Drawing.Size(323, 19);
-            this.lblGreeting.TabIndex = 3;
+            this.lblGreeting.TabIndex = 5;
             this.lblGreeting.Text = "あけましておめでとうございます！ - Raymai (2015)";
             this.lblGreeting.Click += new System.EventHandler(this.lblGreeting_Click);
             // 
@@ -133,12 +148,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(594, 291);
+            this.ClientSize = new System.Drawing.Size(594, 311);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Tell number in Japanese";
+            this.Text = "Tell number in Japanese v1.1";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -156,6 +171,7 @@
         private System.Windows.Forms.TextBox txtHiragana;
         private System.Windows.Forms.TextBox txtKanji;
         private System.Windows.Forms.TextBox txtInput;
+        private System.Windows.Forms.CheckBox chkSpaceHiraRomaji;
     }
 }
 
