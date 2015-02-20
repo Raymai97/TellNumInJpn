@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cmbDaiji = new System.Windows.Forms.ComboBox();
             this.chkSpaceHiraRomaji = new System.Windows.Forms.CheckBox();
             this.lblGreeting = new System.Windows.Forms.Label();
             this.lblRomaji = new System.Windows.Forms.Label();
@@ -43,6 +44,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.cmbDaiji);
             this.panel1.Controls.Add(this.chkSpaceHiraRomaji);
             this.panel1.Controls.Add(this.lblGreeting);
             this.panel1.Controls.Add(this.lblRomaji);
@@ -59,6 +61,20 @@
             this.panel1.Size = new System.Drawing.Size(594, 311);
             this.panel1.TabIndex = 0;
             // 
+            // cmbDaiji
+            // 
+            this.cmbDaiji.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbDaiji.FormattingEnabled = true;
+            this.cmbDaiji.Items.AddRange(new object[] {
+            "Don\'t use 大字",
+            "Use current 大字",
+            "Use obsolete 大字"});
+            this.cmbDaiji.Location = new System.Drawing.Point(380, 41);
+            this.cmbDaiji.Name = "cmbDaiji";
+            this.cmbDaiji.Size = new System.Drawing.Size(179, 27);
+            this.cmbDaiji.TabIndex = 1;
+            this.cmbDaiji.SelectedIndexChanged += new System.EventHandler(this.cmbDaiji_SelectedIndexChanged);
+            // 
             // chkSpaceHiraRomaji
             // 
             this.chkSpaceHiraRomaji.AutoSize = true;
@@ -67,7 +83,7 @@
             this.chkSpaceHiraRomaji.Location = new System.Drawing.Point(36, 225);
             this.chkSpaceHiraRomaji.Name = "chkSpaceHiraRomaji";
             this.chkSpaceHiraRomaji.Size = new System.Drawing.Size(331, 23);
-            this.chkSpaceHiraRomaji.TabIndex = 4;
+            this.chkSpaceHiraRomaji.TabIndex = 5;
             this.chkSpaceHiraRomaji.Text = "Separate hiragana and romaji with space";
             this.chkSpaceHiraRomaji.UseVisualStyleBackColor = true;
             this.chkSpaceHiraRomaji.CheckedChanged += new System.EventHandler(this.chkSpaceHiraRomaji_CheckedChanged);
@@ -108,7 +124,7 @@
             this.txtRomaji.Name = "txtRomaji";
             this.txtRomaji.ReadOnly = true;
             this.txtRomaji.Size = new System.Drawing.Size(523, 27);
-            this.txtRomaji.TabIndex = 3;
+            this.txtRomaji.TabIndex = 4;
             // 
             // lblKanji
             // 
@@ -126,7 +142,7 @@
             this.txtHiragana.Name = "txtHiragana";
             this.txtHiragana.ReadOnly = true;
             this.txtHiragana.Size = new System.Drawing.Size(523, 27);
-            this.txtHiragana.TabIndex = 2;
+            this.txtHiragana.TabIndex = 3;
             // 
             // txtKanji
             // 
@@ -134,7 +150,7 @@
             this.txtKanji.Name = "txtKanji";
             this.txtKanji.ReadOnly = true;
             this.txtKanji.Size = new System.Drawing.Size(523, 27);
-            this.txtKanji.TabIndex = 1;
+            this.txtKanji.TabIndex = 2;
             // 
             // txtInput
             // 
@@ -153,7 +169,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Tell number in Japanese v1.1";
+            this.Text = "Tell number in Japanese v1.2";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -172,6 +188,7 @@
         private System.Windows.Forms.TextBox txtKanji;
         private System.Windows.Forms.TextBox txtInput;
         private System.Windows.Forms.CheckBox chkSpaceHiraRomaji;
+        private System.Windows.Forms.ComboBox cmbDaiji;
     }
 }
 

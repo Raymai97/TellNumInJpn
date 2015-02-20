@@ -1,9 +1,15 @@
-﻿// TellNumInJpn v1.10
-// Written by Raymai97 on 19 Feb 2015 (CNY2015)
+﻿// TellNumInJpn v1.2
+// First written by Raymai97 on 19 Feb 2015 (CNY2015)
 // Email: cheeboonray@gmail.com
 
+// v1.1
 // Added "Space Separation" option
 // Fixed bugs such as Kanji "点" appeared in Hiragana, didn't show ltsu (っ) romaji
+
+// v1.2
+// Added "Use current/obsolete daiji" option
+// Fixed missing "零" when the number is zero point something, such as 0.123
+// Fixed error such as "10000000000" was shown as 百億万 while the true answer is 百億
 
 // toKanji and toHiragana split the number into parts (that are <= 9999) and pass them to _toXXX
 // _toKanji and _toHiragana process number <= 9999, and pass a digit at a time to __toXXX
@@ -13,6 +19,7 @@
 // toRomaji is different, it can process most of the common Hiragana to Romaji
 // It took me pretty much of effort to figure out a good enough algorithm for it...
 // I hope my method is not bad btw...
+
 
 using System;
 using System.Collections.Generic;
@@ -32,6 +39,7 @@ namespace TellNumInJpn
         {
             InitializeComponent();
             this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            cmbDaiji.SelectedIndex = 0;
             // Generate a simple database for hiragana/romaji recognization
             foreach (string data in Properties.Resources.romajihira.Split(';'))
             {
@@ -45,6 +53,7 @@ namespace TellNumInJpn
         string msgMindBlown = "MINDBLOWN! Please try a smaller value / lesser decimal places.";
         string msgNoNeg = "Negative value is not supported!";
         bool SpaceHiraRomaji = true;
+        int UseDaiji = 0; // 0 - No daiji ; 1 - Current daiji ; 2 - Obsolete daiji ;
         List<JpnChar> JpnChars = new List<JpnChar>();
 
         string RomajiOfHira(string hiragana)
@@ -175,85 +184,93 @@ namespace TellNumInJpn
 
         string __toKanji(string s, int digit)
         {
+            string kanji = "?";
             switch (digit)
             {
                 case 3:
                     switch (s)
                     {
-                        case "9": return "九千";
-                        case "8": return "八千";
-                        case "7": return "七千";
-                        case "6": return "六千";
-                        case "5": return "五千";
-                        case "4": return "四千";
-                        case "3": return "三千";
-                        case "2": return "二千";
-                        case "1": return "千";
-                        case "0": return "";
+                        case "9": kanji =  "九千"; break;
+                        case "8": kanji =  "八千"; break;
+                        case "7": kanji =  "七千"; break;
+                        case "6": kanji =  "六千"; break;
+                        case "5": kanji =  "五千"; break;
+                        case "4": kanji =  "四千"; break;
+                        case "3": kanji =  "三千"; break;
+                        case "2": kanji =  "二千"; break;
+                        case "1": kanji =  "千"; break;
+                        case "0": kanji =  ""; break;
                     }
                     break;
                 case 2:
                     switch (s)
                     {
-                        case "9": return "九百";
-                        case "8": return "八百";
-                        case "7": return "七百";
-                        case "6": return "六百";
-                        case "5": return "五百";
-                        case "4": return "四百";
-                        case "3": return "三百";
-                        case "2": return "二百";
-                        case "1": return "百";
-                        case "0": return "";
+                        case "9": kanji =  "九百"; break;
+                        case "8": kanji =  "八百"; break;
+                        case "7": kanji =  "七百"; break;
+                        case "6": kanji =  "六百"; break;
+                        case "5": kanji =  "五百"; break;
+                        case "4": kanji =  "四百"; break;
+                        case "3": kanji =  "三百"; break;
+                        case "2": kanji =  "二百"; break;
+                        case "1": kanji =  "百"; break;
+                        case "0": kanji =  ""; break;
                     }
                     break;
                 case 1:
                     switch (s)
                     {
-                        case "9": return "九十";
-                        case "8": return "八十";
-                        case "7": return "七十";
-                        case "6": return "六十";
-                        case "5": return "五十";
-                        case "4": return "四十";
-                        case "3": return "三十";
-                        case "2": return "二十";
-                        case "1": return "十";
-                        case "0": return "";
+                        case "9": kanji =  "九十"; break;
+                        case "8": kanji =  "八十"; break;
+                        case "7": kanji =  "七十"; break;
+                        case "6": kanji =  "六十"; break;
+                        case "5": kanji =  "五十"; break;
+                        case "4": kanji =  "四十"; break;
+                        case "3": kanji =  "三十"; break;
+                        case "2": kanji =  "二十"; break;
+                        case "1": kanji =  "十"; break;
+                        case "0": kanji =  ""; break;
                     }
                     break;
                 case 0:
                     switch (s)
                     {
-                        case "9": return "九";
-                        case "8": return "八";
-                        case "7": return "七";
-                        case "6": return "六";
-                        case "5": return "五";
-                        case "4": return "四";
-                        case "3": return "三";
-                        case "2": return "二";
-                        case "1": return "一";
-                        case "0": return "";
+                        case "9": kanji =  "九"; break;
+                        case "8": kanji =  "八"; break;
+                        case "7": kanji =  "七"; break;
+                        case "6": kanji =  "六"; break;
+                        case "5": kanji =  "五"; break;
+                        case "4": kanji =  "四"; break;
+                        case "3": kanji =  "三"; break;
+                        case "2": kanji =  "二"; break;
+                        case "1": kanji =  "一"; break;
+                        case "0": kanji =  ""; break;
                     }
                     break;
                 case -1:
                     switch (s)
                     {
-                        case "9": return "九";
-                        case "8": return "八";
-                        case "7": return "七";
-                        case "6": return "六";
-                        case "5": return "五";
-                        case "4": return "四";
-                        case "3": return "三";
-                        case "2": return "二";
-                        case "1": return "一";
-                        case "0": return "零";
+                        case "9": kanji =  "九"; break;
+                        case "8": kanji =  "八"; break;
+                        case "7": kanji =  "七"; break;
+                        case "6": kanji =  "六"; break;
+                        case "5": kanji =  "五"; break;
+                        case "4": kanji =  "四"; break;
+                        case "3": kanji =  "三"; break;
+                        case "2": kanji =  "二"; break;
+                        case "1": kanji =  "一"; break;
+                        case "0": kanji =  "零"; break;
                     }
                     break;
             }
-            return "?";
+            if (UseDaiji == 1) {
+                kanji = kanji.Replace("一", "壱").Replace("二", "弐").Replace("三","参").Replace("十","拾");
+            }
+            if (UseDaiji == 2) {
+                kanji = kanji.Replace("一", "壹").Replace("二", "貳").Replace("三", "參").Replace("四", "肆").Replace("五", "伍").Replace("六", "陸");
+                kanji = kanji.Replace("七", "柒").Replace("八", "捌").Replace("九", "玖").Replace("十", "拾").Replace("百", "佰").Replace("千", "仟").Replace("万", "萬"); 
+            }
+            return kanji;
         }
 
         string _toKanji(decimal num)
@@ -273,14 +290,14 @@ namespace TellNumInJpn
             int digit;
             for (digit = a.Length - 1; digit >= 0; digit--)
             {
-                Kanji = Kanji + __toKanji(a.Substring(a.Length - 1 - digit, 1), digit);
+                Kanji += __toKanji(a.Substring(a.Length - 1 - digit, 1), digit);
             }
             if (b.Length > 0)
             {
                 Kanji += "点";
                 for (digit = b.Length - 1; digit >= 0; digit--)
                 {
-                    Kanji = Kanji + __toKanji(b.Substring(b.Length - 1 - digit, 1), -1);
+                    Kanji += __toKanji(b.Substring(b.Length - 1 - digit, 1), -1);
                 }
             }
             return Kanji;
@@ -289,6 +306,7 @@ namespace TellNumInJpn
         string toKanji(decimal num)
         {
             string Kanji = "";
+            if (num < 1) { Kanji = __toKanji("0", -1); }
             int debt = 1;
             decimal tmpnum = num;
             while (tmpnum > 9999)
@@ -302,15 +320,18 @@ namespace TellNumInJpn
                 if (debt > 1)
                 {
                     tmpnum = Math.Truncate(tmpnum / (decimal)Math.Pow(10000, debt - 1)); 
-                    Kanji += _toKanji(tmpnum);
                     num -= (tmpnum * (decimal)Math.Pow(10000, debt - 1));
-                    tmpnum = num;
-                    switch (debt)
+                    if (tmpnum > 0)
                     {
-                        case 2: Kanji += "万"; break;
-                        case 3: Kanji += "億"; break;
-                        case 4: Kanji += "兆"; break;
+                        Kanji += _toKanji(tmpnum);
+                        switch (debt)
+                        {
+                            case 2: Kanji += "万"; break;
+                            case 3: Kanji += "億"; break;
+                            case 4: Kanji += "兆"; break;
+                        }
                     }
+                    tmpnum = num;
                     debt -= 1;
                 }
                 else
@@ -424,7 +445,7 @@ namespace TellNumInJpn
             int digit;
             for (digit = a.Length - 1; digit >= 0; digit--)
             {
-                Hiragana = Hiragana + __toHiragana(a.Substring(a.Length - 1 - digit, 1), digit);
+                Hiragana += __toHiragana(a.Substring(a.Length - 1 - digit, 1), digit);
             }
             if (b.Length > 0)
             {
@@ -432,7 +453,7 @@ namespace TellNumInJpn
                 if (SpaceHiraRomaji) { Hiragana += " "; }
                 for (digit = b.Length - 1; digit >= 0; digit--)
                 {
-                    Hiragana = Hiragana + __toHiragana(b.Substring(b.Length - 1 - digit, 1), -1);
+                    Hiragana +=__toHiragana(b.Substring(b.Length - 1 - digit, 1), -1);
                 }
             }
             return Hiragana;
@@ -441,6 +462,7 @@ namespace TellNumInJpn
         string toHiragana(decimal num)
         {
             string Hiragana = "";
+            if (num < 1) { Hiragana = __toHiragana("0", -1); }
             int debt = 1;
             decimal tmpnum = num;
             while (tmpnum > 9999)
@@ -454,16 +476,19 @@ namespace TellNumInJpn
                 if (debt > 1)
                 {
                     tmpnum = Math.Truncate(tmpnum / (decimal)Math.Pow(10000, debt - 1));
-                    Hiragana += _toHiragana(tmpnum);
-                    num -= (tmpnum * (decimal)Math.Pow(10000, debt - 1));
-                    tmpnum = num;
-                    switch (debt)
+                    num -= (tmpnum * (decimal)Math.Pow(10000, debt - 1));                  
+                    if (tmpnum > 0)
                     {
-                        case 2: Hiragana += "まん"; break;
-                        case 3: Hiragana += "おく"; break;
-                        case 4: Hiragana += "ちょう"; break;
+                        Hiragana += _toHiragana(tmpnum);
+                        switch (debt)
+                        {
+                            case 2: Hiragana += "まん"; break;
+                            case 3: Hiragana += "おく"; break;
+                            case 4: Hiragana += "ちょう"; break;
+                        }
+                        if (SpaceHiraRomaji) { Hiragana += " "; }
                     }
-                    if (SpaceHiraRomaji) { Hiragana += " "; }
+                    tmpnum = num;
                     debt -= 1;
                 }
                 else
@@ -520,6 +545,12 @@ namespace TellNumInJpn
         private void chkSpaceHiraRomaji_CheckedChanged(object sender, EventArgs e)
         {
             SpaceHiraRomaji = chkSpaceHiraRomaji.Checked;
+            DoJob();
+        }
+
+        private void cmbDaiji_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UseDaiji = cmbDaiji.SelectedIndex;
             DoJob();
         }
 
