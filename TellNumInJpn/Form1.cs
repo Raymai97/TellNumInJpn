@@ -1,4 +1,4 @@
-﻿// TellNumInJpn v1.2
+﻿// TellNumInJpn v1.2.1
 // First written by Raymai97 on 19 Feb 2015 (CNY2015)
 // Email: cheeboonray@gmail.com
 
@@ -10,6 +10,10 @@
 // Added "Use current/obsolete daiji" option
 // Fixed missing "零" when the number is zero point something, such as 0.123
 // Fixed error such as "10000000000" was shown as 百億万 while the true answer is 百億
+
+// v1.2.1
+// Added support for negative number
+// Now support any number below 10^20 instead of 10^16
 
 // toKanji and toHiragana split the number into parts (that are <= 9999) and pass them to _toXXX
 // _toKanji and _toHiragana process number <= 9999, and pass a digit at a time to __toXXX
@@ -51,7 +55,6 @@ namespace TellNumInJpn
 
         string msgNumOnly = "Please enter number only!";
         string msgMindBlown = "MINDBLOWN! Please try a smaller value / lesser decimal places.";
-        string msgNoNeg = "Negative value is not supported!";
         bool SpaceHiraRomaji = true;
         int UseDaiji = 0; // 0 - No daiji ; 1 - Current daiji ; 2 - Obsolete daiji ;
         List<JpnChar> JpnChars = new List<JpnChar>();
@@ -329,6 +332,7 @@ namespace TellNumInJpn
                             case 2: Kanji += "万"; break;
                             case 3: Kanji += "億"; break;
                             case 4: Kanji += "兆"; break;
+                            case 5: Kanji += "京"; break;
                         }
                     }
                     tmpnum = num;
@@ -485,6 +489,7 @@ namespace TellNumInJpn
                             case 2: Hiragana += "まん"; break;
                             case 3: Hiragana += "おく"; break;
                             case 4: Hiragana += "ちょう"; break;
+                            case 5: Hiragana += "けい"; break;
                         }
                         if (SpaceHiraRomaji) { Hiragana += " "; }
                     }
@@ -514,19 +519,21 @@ namespace TellNumInJpn
             {
                 txtHiragana.Text = msgNumOnly; txtKanji.Text = msgNumOnly; txtRomaji.Text = msgNumOnly; return;
             }
-            if (s.Contains("-"))
-            {
-                txtHiragana.Text = msgNoNeg; txtKanji.Text = msgNoNeg; txtRomaji.Text = msgNoNeg; return;
-            }
-            if ((num >= 9999999999999999 + 1) | (s.Replace(".", "").Length > 28))
+            if ((decimal.Compare((decimal)Math.Pow(10, 20), num) <= 0) | s.Replace(".","").Replace("-","").Length > 28)
             {
                 txtHiragana.Text = msgMindBlown; txtKanji.Text = msgMindBlown; txtRomaji.Text = msgMindBlown; return;
             }
             s = num.ToString();
-            string Romaji = "", Kanji = "", Hiragana = "";
-            Kanji = toKanji(num);
-            Hiragana = toHiragana(num);
-            Romaji = toRomaji(Hiragana);
+            string Romaji = "", Kanji = "", Hiragana= "";
+            if (num < 0)
+            {
+                Kanji = "−"; Hiragana = "まいなす";
+                if (SpaceHiraRomaji) { Hiragana += " ";}
+                num = Math.Abs(num);
+            }
+            Kanji += toKanji(num);
+            Hiragana += toHiragana(num);
+            Romaji += toRomaji(Hiragana);
             txtHiragana.Text = Hiragana;
             txtRomaji.Text = Romaji;
             txtKanji.Text = Kanji;
