@@ -1,6 +1,8 @@
 # Tell number in Japanese
 Program that converts number to Japanese in form of Kanji, Hiragana and Romaji.
 
+### This repo is outdated and for memento purpose only. I've rewritten it using better and more portable code: https://github.com/Raymai97/JpnNumText
+
 Latest version: TellNumInJpn v1.2.1 (21/2/2015)
 
 First written by Raymai97 on 19 Feb 2015 (CNY2015)
